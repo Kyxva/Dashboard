@@ -1,0 +1,116 @@
+
+<div class="container-fluid">
+
+    <div class="row mt-4 mx-auto">
+        <div class="col-sm">
+            <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+                <div class="card-header bg-body txt1" 
+                     style="border-color: blueviolet;"> 
+                     Países disponibles 
+                </div>
+                <div class="card-body text-center">
+                    <div class="row mx-auto">
+                        <div class="col-sm">
+                            <img src="../../../assets/images/banderas/Mexico.png" alt="Mexico"
+                             style="width: 90px; height: 55px; cursor: pointer;"
+                             (click)="obtenerClima('Mexico'); obtenerHora('MX')"> México
+                        </div>
+                        <div class="col-sm">
+                            <img src="../../../assets/images/banderas/Argentina.png" alt="Mexico"
+                             style="width: 90px; height: 55px; cursor: pointer;"
+                             (click)="obtenerClima('Argentina'); obtenerHora('AR')"> Argentina
+                        </div>
+                        <div class="col-sm">
+                            <img src="../../../assets/images/banderas/Brazil.png" alt="Mexico"
+                             style="width: 90px; height: 55px; cursor: pointer;"
+                             (click)="obtenerClima('Brazil'); obtenerHora('BR')"> Brazil
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+  
+  <div class="row mx-auto align-items-stretch">
+    <div class="col-sm">
+        <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+            <div class="card-header bg-body txt1" 
+                 style="border-color: blueviolet;"> 
+                 País seleccionado 
+            </div>
+            <div class="card-body text-center" *ngIf="clima"> 
+                <img src="../../../assets/images/banderas/{{clima.location.country}}.png" 
+                     alt="pais" style="width: 90px; height: 55px;">
+                {{ clima.location.country }}
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+            <div class="card-header bg-body txt1" 
+                 style="border-color: blueviolet;">
+                  Clima 
+            </div>
+            <div class="card-body text-center" *ngIf="clima" style="font-size: 30px;">
+                <img src="{{clima.current.condition.icon}}" 
+                     alt="icono" style="width: 70px; height: 55px;">
+                {{ clima.current.temp_c }} °C
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+            <div class="card-header bg-body txt1" 
+                 style="border-color: blueviolet;"> 
+                 Hora 
+            </div>
+            <div class="card-body text-center" *ngIf="zonas" style="font-size: 36px;">
+                {{ fechaCiudad | date: 'shortTime' }}
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto">
+    <div class="col-sm">
+        <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+            <div class="card-header bg-body txt1" 
+                 style="border-color: blueviolet;"> 
+                 Tareas pendientes 
+            </div>
+            <div class="card-body">
+                <ul *ngFor="let tarea of tareas | slice: 0:3 ">
+                    <li> {{ tarea }} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+            <div class="card-header bg-body txt1" 
+                 style="border-color: blueviolet;"> 
+                 Tareas completadas
+            </div>
+            <div class="card-body">
+                <ul *ngFor="let tarea of tareas | slice: 3:7 ">
+                    <li> {{ tarea }} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card shadow-sm p-2 bg-body rounded-0 mb-3">
+            <div class="card-header bg-body txt1" 
+                 style="border-color: blueviolet;"> 
+                 Zonas horarias 
+            </div>
+            <div class="card-body" *ngIf="zonas">
+                <ul *ngFor="let zona of zonasHorarias">
+                    <li (click)="select(zona)" style="cursor: pointer;">{{ zona }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</div>
