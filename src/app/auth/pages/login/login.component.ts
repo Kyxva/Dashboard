@@ -31,9 +31,9 @@ export class LoginComponent {
     this.authService.login( email )
       .subscribe( resp => {
 
-        if(resp == null) {
+        if ( resp == null ) {
           Swal.fire('Error', 'El correo es incorrecto', 'error');
-        } else if(password == resp.password) {
+        } else if ( password == resp.password ) {
           this.router.navigateByUrl('/dashboard');
         } else {
           Swal.fire('Error', 'La contraseña es incorrecta', 'error');

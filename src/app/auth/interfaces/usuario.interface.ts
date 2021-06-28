@@ -8,8 +8,8 @@ export interface UsuarioResponse {
 }
 
 export interface Usuario {
+    id?: number;
     nombre: string;
     email: string;
     fechaLogin: Date;
-    fechaRegistro?: Date;
 }

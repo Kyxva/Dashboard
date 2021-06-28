@@ -15,8 +15,8 @@
             <td> {{ i + 1 }} </td>
             <td> {{ usuario.nombre | titlecase }} </td>
             <td> {{ usuario.email }} </td>
-            <td> {{ usuario.fechaReg | date: 'dd/MM/yyyy' }}, {{ usuario.fechaReg | date: 'shortTime' }} </td>
-            <td> {{ user.fechaLogin | date:'dd/MM/yyyy'}}, {{ user.fechaLogin | date:'shortTime'}} </td>
+            <td> {{ usuario.fechaReg | date: 'dd/MM/yyyy, h:mm a' }} </td>
+            <td> {{ user.fechaLogin | date:'dd/MM/yyyy, h:mm a'}} </td>
           </tr>
         </tbody>
       </table>

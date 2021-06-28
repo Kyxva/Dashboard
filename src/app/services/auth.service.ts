@@ -1,37 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
 import { UsuarioResponse, Usuario } from '../auth/interfaces/usuario.interface';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  isLogin: boolean = false;
   private apiUrl: string = 'http://localhost:8080/api/usuario';
-  private _usuario!: Usuario;
+  private _usuario: Usuario | undefined;
 
-  get usuario() {
-    return { ...this._usuario };
+  get usuario(): Usuario {
+    return { ...this._usuario! };
   }
 
   constructor( private http: HttpClient ) { }
 
   login( email: string ) {
-    this.isLogin = true;
     return this.http.post<UsuarioResponse>( this.apiUrl, email )
       .pipe(
         tap( resp => {
           if(resp == null) {
-            return
-          } else {
-            this._usuario = {
-            nombre: resp.nombre,
-            email: resp.email,
-            fechaLogin: new Date()
-            }
-          }
+            return;
+          } 
+          localStorage.setItem('token', resp.id!.toString() );
         })
       )
   }
@@ -52,7 +47,24 @@ export class AuthService {
   }
 
   logout() {
-    this.isLogin = false;
+    this._usuario = undefined;
+    localStorage.clear();
+  }
+
+  verificarAutenticacion(): Observable<boolean> {
+
+    if ( !localStorage.getItem('token') ) {
+      return of( false );
+    }
+
+    return this.http.get<Usuario>( `${ this.apiUrl }/${ localStorage.getItem('token') }` )
+            .pipe(
+              map( resp => {
+                this._usuario = resp;
+                this._usuario.fechaLogin = new Date();
+                return true;
+              })
+            );
   }
 
 }
